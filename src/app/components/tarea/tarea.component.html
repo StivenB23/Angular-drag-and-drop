@@ -1,0 +1,67 @@
+<div class="container mt-3">
+  <div class="row">
+    <h3 class="text-center montserrat">TODOS LIST</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-2 mb-4">
+        <input type="text" [(ngModel)]="inputTodo" (keyup.enter)="addTodo()" class="form-control form-control-md text-center" placeholder="Enter todo" >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h4 class="montserrat">to do</h4>
+      <div
+        cdkDropList
+        #todoList="cdkDropList"
+        class="list"
+        id="list-todo"
+        [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="[listProgress]"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="item" *ngFor="let todo of todos; let index = index" cdkDrag>
+          {{ todo }}
+          <i class="bi bi-clock icon-todo"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h4 class="montserrat">In Progress</h4>
+      <div
+        #listProgress="cdkDropList"
+        cdkDropList
+        class="list"
+        id="list-progress"
+        [cdkDropListData]="progress"
+        [cdkDropListConnectedTo]="['todoList', 'list-done']"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="item"
+          *ngFor="let todo of progress; let index = index"
+          cdkDrag
+        >
+          {{ todo }}
+          <i class="bi bi-clock-history icon-proggres"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h4 class="montserrat">Done</h4>
+      <div
+        cdkDropList
+        #listDone="cdkDropList"
+        class="list"
+        id="list-done"
+        [cdkDropListConnectedTo]="['list-progress']"
+        [cdkDropListData]="done"
+        (cdkDropListDropped)="drop($event)"
+      >
+      <div class="item" *ngFor="let todo of done; let index = index" cdkDrag>
+            {{ todo }}
+            <span><i class="bi bi-emoji-smile icon-done"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
